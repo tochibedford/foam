@@ -1,15 +1,13 @@
 import { useState } from 'react'
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './App.scss'
+import Loader from './components/Loader';
 
 function App() {
-  gsap.registerPlugin(ScrollTrigger);
-  const [count, setCount] = useState(0)
 
   return (
     <div className="App">
-      Heyy
+      <Loader />
+      FOAM
     </div>
   )
 }
