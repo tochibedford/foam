@@ -1,30 +1,41 @@
 import styles from "./Loader.module.scss"
 import foamLogo from "../../assets/foam.svg"
 import { gsap } from "../../gsapConfig";
-import { useEffect, useLayoutEffect, useRef } from "react";
-import img1 from "./assets/img1.jpg";
-import img2 from "./assets/img2.jpg";
-import img3 from "./assets/img3.jpg";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import img1 from "./assets/img (1).jpg";
+import img2 from "./assets/img (2).jpg";
+import img3 from "./assets/img (3).jpg";
+import img4 from "./assets/img (4).jpg";
+import img5 from "./assets/img (5).jpg";
+import img6 from "./assets/img (6).jpg";
 
 const Loader = () => {
     const loaderRef = useRef<HTMLDivElement>(null)
+    const progressRef = useRef<HTMLDivElement>(null)
+    const [progress, setProgress] = useState(0);
     useEffect(() => {
         const loader = loaderRef?.current
-        const tl = gsap.timeline()
+        const tl = gsap.timeline({ onUpdate: () => { setProgress(Math.round(tl.progress() * 100)) }, onComplete: () => { if (progressRef.current) progressRef.current.style.opacity = "0.001" } })
         if (loader) {
-            tl.to(loader?.querySelector("#foamSvg"), { duration: 1.5, width: "0.3em", delay: 0.4, ease: "expo.inOut" })
-                .to(loader?.querySelector("#loaderTitle"), { duration: 1.5, fontSize: "5rem", ease: "expo.inOut" }, "-=1.5")
-                .fromTo(loader?.querySelector(".imageAnim1"), { transform: "translate(-50%, -50%)" }, { duration: 0.6, opacity: "1", ease: "expo.inOut", zIndex: 1 }, "-=0.8")
-                .to(loader?.querySelector(".imageAnim1"), { duration: 0.8, scale: 0.4, opacity: "0", ease: "expo.inOut", zIndex: 1 })
+            tl.to(loader?.querySelector("#foamSvg"), { duration: 1.5, width: "0.03em", delay: 0.4, ease: "expo.inOut" }) //foam svg reduce
+                .to(loader?.querySelector("#loaderTitle"), { duration: 1.5, scale: "1.7", ease: "expo.inOut" }, "-=1.5") //title text increase
+                .fromTo(loader?.querySelector(".imageAnim1"), { transform: "translate(-50%, -50%)" }, { duration: 0.6, opacity: "1", ease: "expo.inOut", zIndex: 1 }, "-=0.8") //center image
+                .to(loader?.querySelector(".imageAnim1"), { duration: 0.8, scale: 0.4, opacity: "0.001", ease: "expo.inOut", zIndex: 1 })
                 .fromTo(loader?.querySelector(".imageAnim2"), { top: "35%", left: "20%", }, { top: "40%", left: "15%", duration: 1, opacity: "1", ease: "expo.inOut", zIndex: 1 }, "-=0.8")
                 .fromTo(loader?.querySelector(".imageAnim3"), { top: "25%", left: "65%", }, { top: "20%", left: "70%", duration: 1, opacity: "1", ease: "expo.inOut", zIndex: 1 }, "-=1")
                 .to(loader?.querySelector(".imageAnim2"), { top: "35%", left: "20%", duration: 0.6, opacity: "0.001", ease: "expo.inOut", zIndex: 1 })
                 .to(loader?.querySelector(".imageAnim3"), { top: "25%", left: "65%", duration: 0.6, opacity: "0.001", ease: "expo.inOut", zIndex: 1 }, "-=0.6")
+                .fromTo(loader?.querySelector(".imageAnim4"), { top: "35%", left: "10%", opacity: "0.001", }, { top: "30%", left: "15%", opacity: 1, duration: 0.4 }, "-=0.4")
+                .fromTo(loader?.querySelector(".imageAnim5"), { top: "65%", left: "85%", opacity: "0.001", }, { top: "60%", left: "75%", opacity: 1, duration: 0.4 }, "-=0.4")
+                .fromTo(loader?.querySelector(".imageAnim6"), { top: "5%", left: "60%", opacity: "0.001", }, { top: "10%", left: "65%", opacity: 1, duration: 0.4 }, "-=0.4")
+
+
             // tl.to(loader?.querySelector(".imageAnim1"), { duration: 1, scale: 1, opacity: "0", ease: "expo.inOut", zIndex: "inherit" })
         }
     }, [])
     return (
         <div className={styles.loaderContainer} ref={loaderRef}>
+            <div className={styles.progress} ref={progressRef}>{progress}</div>
             <div className={styles.mainLoader}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 427 138" className={styles.foamSvg} id="foamSvg">
                     <path fill="currentColor" d="M42.6837 134.143V61.4479H60.2243V35.3791H42.1996C41.7155 29.7557 44.6203 25.7337 50.5416 25.7337C53.5954 25.7337 57.4685 27.1861 60.1871 27.9681V2.90481C56.6492 1.78758 50.6906 0 45.8865 0C25.9625 0 13.226 13.8165 13.226 31.506V35.3791H0.415009V61.4479H13.3005V134.143H42.6837Z"></path>
@@ -37,9 +48,14 @@ const Loader = () => {
                 </div>
             </div>
             <div className={styles.imageField}>
-                <img src={img1} alt="" className={`${styles.imageFieldImage} imageAnim1`} id={styles.image1} />
-                <img src={img2} alt="" className={`${styles.imageFieldImage} imageAnim2`} id={styles.image2} />
-                <img src={img3} alt="" className={`${styles.imageFieldImage} imageAnim3`} id={styles.image3} />
+                <div className={styles.imageFieldInner}>
+                    <img src={img1} alt="" className={`${styles.imageFieldImage} imageAnim1`} id={styles.image1} />
+                    <img src={img2} alt="" className={`${styles.imageFieldImage} imageAnim2`} id={styles.image2} />
+                    <img src={img3} alt="" className={`${styles.imageFieldImage} imageAnim3`} id={styles.image3} />
+                    <img src={img4} alt="" className={`${styles.imageFieldImage} imageAnim4`} id={styles.image4} />
+                    <img src={img5} alt="" className={`${styles.imageFieldImage} imageAnim5`} id={styles.image5} />
+                    <img src={img6} alt="" className={`${styles.imageFieldImage} imageAnim6`} id={styles.image6} />
+                </div>
             </div>
         </div>
     );
