@@ -8,6 +8,11 @@ import img3 from "./assets/img (3).jpg";
 import img4 from "./assets/img (4).jpg";
 import img5 from "./assets/img (5).jpg";
 import img6 from "./assets/img (6).jpg";
+import img7 from "./assets/img (7).jpg";
+import img8 from "./assets/img (8).jpg";
+import img9 from "./assets/img (9).jpg";
+import img10 from "./assets/img (10).jpg";
+import img11 from "./assets/img (11).jpg";
 
 const Loader = () => {
     const loaderRef = useRef<HTMLDivElement>(null)
@@ -28,6 +33,10 @@ const Loader = () => {
                 .fromTo(loader?.querySelector(".imageAnim4"), { top: "35%", left: "10%", opacity: "0.001", }, { top: "30%", left: "15%", opacity: 1, duration: 0.4 }, "-=0.4")
                 .fromTo(loader?.querySelector(".imageAnim5"), { top: "65%", left: "85%", opacity: "0.001", }, { top: "60%", left: "75%", opacity: 1, duration: 0.4 }, "-=0.4")
                 .fromTo(loader?.querySelector(".imageAnim6"), { top: "5%", left: "60%", opacity: "0.001", }, { top: "10%", left: "65%", opacity: 1, duration: 0.4 }, "-=0.4")
+                .to(loader?.querySelector(".imageAnim4"), { top: "95%", left: "40%", opacity: 1, duration: 0.6, ease: "expo.inOut" }, "+=0.5")
+                .to(loader?.querySelector(".imageAnim5"), { top: "-10%", left: "30%", opacity: 1, duration: 0.6, ease: "expo.inOut" }, "-=0.6")
+                .to(loader?.querySelector(".imageAnim6"), { top: "15%", left: "70%", opacity: 1, duration: 0.6, ease: "expo.inOut" }, "-=0.6")
+                .to(loader, { backgroundColor: "white" })
 
 
             // tl.to(loader?.querySelector(".imageAnim1"), { duration: 1, scale: 1, opacity: "0", ease: "expo.inOut", zIndex: "inherit" })
@@ -55,6 +64,11 @@ const Loader = () => {
                     <img src={img4} alt="" className={`${styles.imageFieldImage} imageAnim4`} id={styles.image4} />
                     <img src={img5} alt="" className={`${styles.imageFieldImage} imageAnim5`} id={styles.image5} />
                     <img src={img6} alt="" className={`${styles.imageFieldImage} imageAnim6`} id={styles.image6} />
+                    <img src={img7} alt="" className={`${styles.imageFieldImage} imageAnim7`} id={styles.image7} />
+                    <img src={img8} alt="" className={`${styles.imageFieldImage} imageAnim8`} id={styles.image8} />
+                    <img src={img9} alt="" className={`${styles.imageFieldImage} imageAnim9`} id={styles.image9} />
+                    <img src={img10} alt="" className={`${styles.imageFieldImage} imageAnim10`} id={styles.image10} />
+                    <img src={img11} alt="" className={`${styles.imageFieldImage} imageAnim11`} id={styles.image11} />
                 </div>
             </div>
         </div>
