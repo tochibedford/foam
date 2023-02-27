@@ -13,6 +13,12 @@ import img8 from "./assets/img (8).jpg";
 import img9 from "./assets/img (9).jpg";
 import img10 from "./assets/img (10).jpg";
 import img11 from "./assets/img (11).jpg";
+import img12 from "./assets/img (12).jpg";
+import img13 from "./assets/img (13).jpg";
+import img14 from "./assets/img (14).jpg";
+import img15 from "./assets/img (15).jpg";
+import img16 from "./assets/img (16).jpg";
+import img17 from "./assets/img (17).jpg";
 
 const Loader = () => {
     const loaderRef = useRef<HTMLDivElement>(null)
@@ -20,23 +26,27 @@ const Loader = () => {
     const [progress, setProgress] = useState(0);
     useEffect(() => {
         const loader = loaderRef?.current
+        console.log(loader?.querySelector("#imageFieldInner")?.children)
         const tl = gsap.timeline({ onUpdate: () => { setProgress(Math.round(tl.progress() * 100)) }, onComplete: () => { if (progressRef.current) progressRef.current.style.opacity = "0.001" } })
         if (loader) {
             tl.to(loader?.querySelector("#foamSvg"), { duration: 1.5, width: "0.03em", delay: 0.4, ease: "expo.inOut" }) //foam svg reduce
                 .to(loader?.querySelector("#loaderTitle"), { duration: 1.5, scale: "1.7", ease: "expo.inOut" }, "-=1.5") //title text increase
                 .fromTo(loader?.querySelector(".imageAnim1"), { transform: "translate(-50%, -50%)" }, { duration: 0.6, opacity: "1", ease: "expo.inOut", zIndex: 1 }, "-=0.8") //center image
                 .to(loader?.querySelector(".imageAnim1"), { duration: 0.8, scale: 0.4, opacity: "0.001", ease: "expo.inOut", zIndex: 1 })
-                .fromTo(loader?.querySelector(".imageAnim2"), { top: "35%", left: "20%", }, { top: "40%", left: "15%", duration: 1, opacity: "1", ease: "expo.inOut", zIndex: 1 }, "-=0.8")
+                .to(loader?.querySelector(".imageAnim1"), { duration: 0.1, scale: 1 })
+                .fromTo(loader?.querySelector(".imageAnim2"), { top: "35%", left: "20%", }, { top: "40%", left: "15%", duration: 1, opacity: "1", ease: "expo.inOut", zIndex: 1 }, "-=0.9")
                 .fromTo(loader?.querySelector(".imageAnim3"), { top: "25%", left: "65%", }, { top: "20%", left: "70%", duration: 1, opacity: "1", ease: "expo.inOut", zIndex: 1 }, "-=1")
                 .to(loader?.querySelector(".imageAnim2"), { top: "35%", left: "20%", duration: 0.6, opacity: "0.001", ease: "expo.inOut", zIndex: 1 })
                 .to(loader?.querySelector(".imageAnim3"), { top: "25%", left: "65%", duration: 0.6, opacity: "0.001", ease: "expo.inOut", zIndex: 1 }, "-=0.6")
                 .fromTo(loader?.querySelector(".imageAnim4"), { top: "35%", left: "10%", opacity: "0.001", }, { top: "30%", left: "15%", opacity: 1, duration: 0.4 }, "-=0.4")
                 .fromTo(loader?.querySelector(".imageAnim5"), { top: "65%", left: "85%", opacity: "0.001", }, { top: "60%", left: "75%", opacity: 1, duration: 0.4 }, "-=0.4")
-                .fromTo(loader?.querySelector(".imageAnim6"), { top: "5%", left: "60%", opacity: "0.001", }, { top: "10%", left: "65%", opacity: 1, duration: 0.4 }, "-=0.4")
+                .fromTo(loader?.querySelector(".imageAnim6"), { top: "0%", left: "60%", opacity: "0.001", }, { top: "5%", left: "65%", opacity: 1, duration: 0.4 }, "-=0.4")
                 .to(loader?.querySelector(".imageAnim4"), { top: "95%", left: "40%", opacity: 1, duration: 0.6, ease: "expo.inOut" }, "+=0.5")
                 .to(loader?.querySelector(".imageAnim5"), { top: "-10%", left: "30%", opacity: 1, duration: 0.6, ease: "expo.inOut" }, "-=0.6")
-                .to(loader?.querySelector(".imageAnim6"), { top: "15%", left: "70%", opacity: 1, duration: 0.6, ease: "expo.inOut" }, "-=0.6")
-                .to(loader, { backgroundColor: "white" })
+                .to(loader?.querySelector(".imageAnim6"), { top: "10%", left: "75%", opacity: 1, duration: 0.6, ease: "expo.inOut" }, "-=0.6")
+                .to(loader, { backgroundColor: "white" }, "-=0.5")
+                .to([loader?.querySelector("#imageFieldInner")?.querySelectorAll('img')], { opacity: 1 }, "-=0.5")
+                .fromTo(loader?.querySelector("#imageFieldInner"), { scale: 1.05 }, { duration: 0.5, scale: 1 }, "-=0.5")
 
 
             // tl.to(loader?.querySelector(".imageAnim1"), { duration: 1, scale: 1, opacity: "0", ease: "expo.inOut", zIndex: "inherit" })
@@ -57,7 +67,7 @@ const Loader = () => {
                 </div>
             </div>
             <div className={styles.imageField}>
-                <div className={styles.imageFieldInner}>
+                <div className={styles.imageFieldInner} id="imageFieldInner">
                     <img src={img1} alt="" className={`${styles.imageFieldImage} imageAnim1`} id={styles.image1} />
                     <img src={img2} alt="" className={`${styles.imageFieldImage} imageAnim2`} id={styles.image2} />
                     <img src={img3} alt="" className={`${styles.imageFieldImage} imageAnim3`} id={styles.image3} />
@@ -69,6 +79,12 @@ const Loader = () => {
                     <img src={img9} alt="" className={`${styles.imageFieldImage} imageAnim9`} id={styles.image9} />
                     <img src={img10} alt="" className={`${styles.imageFieldImage} imageAnim10`} id={styles.image10} />
                     <img src={img11} alt="" className={`${styles.imageFieldImage} imageAnim11`} id={styles.image11} />
+                    <img src={img12} alt="" className={`${styles.imageFieldImage} imageAnim12`} id={styles.image12} />
+                    <img src={img13} alt="" className={`${styles.imageFieldImage} imageAnim13`} id={styles.image13} />
+                    <img src={img14} alt="" className={`${styles.imageFieldImage} imageAnim14`} id={styles.image14} />
+                    <img src={img15} alt="" className={`${styles.imageFieldImage} imageAnim15`} id={styles.image15} />
+                    <img src={img16} alt="" className={`${styles.imageFieldImage} imageAnim16`} id={styles.image16} />
+                    <img src={img17} alt="" className={`${styles.imageFieldImage} imageAnim17`} id={styles.image17} />
                 </div>
             </div>
         </div>
