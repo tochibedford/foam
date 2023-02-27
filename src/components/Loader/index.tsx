@@ -1,5 +1,4 @@
 import styles from "./Loader.module.scss"
-import foamLogo from "../../assets/foam.svg"
 import { gsap } from "../../gsapConfig";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import img1 from "./assets/img (1).jpg";
@@ -26,30 +25,114 @@ const Loader = () => {
     const [progress, setProgress] = useState(0);
     useEffect(() => {
         const loader = loaderRef?.current
-        console.log(loader?.querySelector("#imageFieldInner")?.children)
         const tl = gsap.timeline({ onUpdate: () => { setProgress(Math.round(tl.progress() * 100)) }, onComplete: () => { if (progressRef.current) progressRef.current.style.opacity = "0.001" } })
         if (loader) {
             tl.to(loader?.querySelector("#foamSvg"), { duration: 1.5, width: "0.03em", delay: 0.4, ease: "expo.inOut" }) //foam svg reduce
-                .to(loader?.querySelector("#loaderTitle"), { duration: 1.5, scale: "1.7", ease: "expo.inOut" }, "-=1.5") //title text increase
+                .to(loader?.querySelector("#loaderTitle"), { duration: 1.5, scale: "2", ease: "expo.inOut" }, "-=1.5") //title text increase
                 .fromTo(loader?.querySelector(".imageAnim1"), { transform: "translate(-50%, -50%)" }, { duration: 0.6, opacity: "1", ease: "expo.inOut", zIndex: 1 }, "-=0.8") //center image
                 .to(loader?.querySelector(".imageAnim1"), { duration: 0.8, scale: 0.4, opacity: "0.001", ease: "expo.inOut", zIndex: 1 })
-                .to(loader?.querySelector(".imageAnim1"), { duration: 0.1, scale: 1 })
+                .to(loader?.querySelector(".imageAnim1"), { duration: 0.1, left: "55%", top: "55%", scale: 1 })
                 .fromTo(loader?.querySelector(".imageAnim2"), { top: "35%", left: "20%", }, { top: "40%", left: "15%", duration: 1, opacity: "1", ease: "expo.inOut", zIndex: 1 }, "-=0.9")
                 .fromTo(loader?.querySelector(".imageAnim3"), { top: "25%", left: "65%", }, { top: "20%", left: "70%", duration: 1, opacity: "1", ease: "expo.inOut", zIndex: 1 }, "-=1")
-                .to(loader?.querySelector(".imageAnim2"), { top: "35%", left: "20%", duration: 0.6, opacity: "0.001", ease: "expo.inOut", zIndex: 1 })
+                .to(loader?.querySelector(".imageAnim2"), { top: "35%", left: "10%", duration: 0.6, opacity: "0.001", ease: "expo.inOut", zIndex: 1 })
                 .to(loader?.querySelector(".imageAnim3"), { top: "25%", left: "65%", duration: 0.6, opacity: "0.001", ease: "expo.inOut", zIndex: 1 }, "-=0.6")
                 .fromTo(loader?.querySelector(".imageAnim4"), { top: "35%", left: "10%", opacity: "0.001", }, { top: "30%", left: "15%", opacity: 1, duration: 0.4 }, "-=0.4")
                 .fromTo(loader?.querySelector(".imageAnim5"), { top: "65%", left: "85%", opacity: "0.001", }, { top: "60%", left: "75%", opacity: 1, duration: 0.4 }, "-=0.4")
                 .fromTo(loader?.querySelector(".imageAnim6"), { top: "0%", left: "60%", opacity: "0.001", }, { top: "5%", left: "65%", opacity: 1, duration: 0.4 }, "-=0.4")
-                .to(loader?.querySelector(".imageAnim4"), { top: "95%", left: "40%", opacity: 1, duration: 0.6, ease: "expo.inOut" }, "+=0.5")
-                .to(loader?.querySelector(".imageAnim5"), { top: "-10%", left: "30%", opacity: 1, duration: 0.6, ease: "expo.inOut" }, "-=0.6")
-                .to(loader?.querySelector(".imageAnim6"), { top: "10%", left: "75%", opacity: 1, duration: 0.6, ease: "expo.inOut" }, "-=0.6")
-                .to(loader, { backgroundColor: "white" }, "-=0.5")
+                .to(loader?.querySelector(".imageAnim4"), { top: "90%", left: "40%", opacity: 1, duration: 0.6, ease: "expo.inOut" }, "+=0.5")
+                .to(loader?.querySelector(".imageAnim5"), { top: "-5%", left: "20%", opacity: 1, duration: 0.6, ease: "expo.inOut" }, "-=0.6")
+                .to(loader?.querySelector(".imageAnim6"), { top: "10%", left: "80%", opacity: 1, duration: 0.6, ease: "expo.inOut" }, "-=0.6")
+                .to(loader?.querySelector("#loaderTitle"), { duration: 0.7, opacity: 0.001, ease: "expo.inOut" }, "-=0.6") //title text increase
+                .to(loader, { backgroundColor: "white" }, "-=0.7")
                 .to([loader?.querySelector("#imageFieldInner")?.querySelectorAll('img')], { opacity: 1 }, "-=0.5")
                 .fromTo(loader?.querySelector("#imageFieldInner"), { scale: 1.05 }, { duration: 0.5, scale: 1 }, "-=0.5")
 
 
             // tl.to(loader?.querySelector(".imageAnim1"), { duration: 1, scale: 1, opacity: "0", ease: "expo.inOut", zIndex: "inherit" })
+        }
+    }, [])
+
+    useEffect(() => {
+        const loader = loaderRef?.current
+        let mouseDown = false
+        const shift = {
+            x: 0,
+            y: 0
+        }
+        const handleMouseDown = (e: MouseEvent) => {
+            const imageField = loader?.querySelector(`.${styles.imageField}`)
+            imageField?.classList.add(styles.grabbing)
+            mouseDown = true
+            if (imageField) {
+                shift.x = e.clientX - imageField.getBoundingClientRect()?.left
+                shift.y = e.clientY - imageField.getBoundingClientRect()?.top
+            }
+        }
+        const handleTouchStart = (e: TouchEvent) => {
+            const touch = e.touches[0]
+            const imageField = loader?.querySelector(`.${styles.imageField}`)
+            imageField?.classList.add(styles.grabbing)
+            mouseDown = true
+            if (imageField) {
+                shift.x = touch.clientX - imageField.getBoundingClientRect()?.left
+                shift.y = touch.clientY - imageField.getBoundingClientRect()?.top
+            }
+
+        }
+
+        const handleMouseUp = () => {
+            loader?.querySelector(`.${styles.imageField}`)?.classList.remove(styles.grabbing)
+            mouseDown = false
+        }
+
+        const handleTouchEnd = () => {
+            loader?.querySelector(`.${styles.imageField}`)?.classList.remove(styles.grabbing)
+            mouseDown = false
+        }
+
+        const handleMouseMove = (e: MouseEvent) => {
+            if (mouseDown) {
+                const imageField = loader?.querySelector<HTMLDivElement>(`.${styles.imageField}`)
+                if (imageField) {
+                    imageField.style.left = `${Math.min(0, e.pageX - shift.x)}px`
+                    imageField.style.top = `${Math.min(0, e.pageY - shift.y)}px`
+                }
+
+            }
+        }
+
+        const handleTouchMove = (e: TouchEvent) => {
+            e.preventDefault();
+            const touch = e.touches[0]
+            if (mouseDown) {
+                const imageField = loader?.querySelector<HTMLDivElement>(`.${styles.imageField}`)
+                if (imageField) {
+                    imageField.style.left = `${Math.min(0, touch.pageX - shift.x)}px`
+                    imageField.style.top = `${Math.min(0, touch.pageY - shift.y)}px`
+                }
+
+            }
+        }
+
+        loader?.querySelector<HTMLDivElement>(`.${styles.imageField}`)?.addEventListener("mousedown", handleMouseDown)
+        loader?.querySelector<HTMLDivElement>(`.${styles.imageField}`)?.addEventListener("touchstart", handleTouchStart)
+
+        document.addEventListener("mousemove", handleMouseMove)
+        loader?.addEventListener("touchmove", handleTouchMove)
+
+        window.addEventListener("mouseup", handleMouseUp)
+        loader?.querySelector<HTMLDivElement>(`.${styles.imageField}`)?.addEventListener("touchend", handleTouchEnd)
+
+        return () => {
+            loader?.querySelector<HTMLDivElement>(`.${styles.imageField}`)?.removeEventListener("mousedown", handleMouseDown)
+            loader?.querySelector<HTMLDivElement>(`.${styles.imageField}`)?.removeEventListener("touchstart", handleTouchStart)
+
+            document.removeEventListener("mousemove", handleMouseMove)
+            loader?.removeEventListener("touchmove", handleTouchMove)
+
+            window.removeEventListener("mouseup", handleMouseUp)
+            loader?.querySelector<HTMLDivElement>(`.${styles.imageField}`)?.removeEventListener("mouseup", handleTouchEnd)
+
         }
     }, [])
     return (
