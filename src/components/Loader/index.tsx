@@ -140,6 +140,22 @@ const Loader = () => {
 
         }
     }, [])
+
+    useEffect(() => {
+        //parallax
+        const handleScroll = () => {
+            const scrollDistance = window.scrollY
+            const damping = 0.5 //0.5 means ~ for every 1px of scrolling only move the controlled object 0.5px
+            const loader = loaderRef?.current
+            if (loader)
+                loader.style.transform = `translateY(${scrollDistance * damping}px)`
+        }
+        window.addEventListener('scroll', handleScroll, { passive: true })
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
     return (
         <div className={styles.loaderContainer} ref={loaderRef}>
             <div className={styles.progress} ref={progressRef}>{progress}</div>
