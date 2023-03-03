@@ -1,23 +1,23 @@
 import styles from "./Loader.module.scss"
 import { gsap } from "../../gsapConfig";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import img1 from "./assets/img (1).jpg";
-import img2 from "./assets/img (2).jpg";
-import img3 from "./assets/img (3).jpg";
-import img4 from "./assets/img (4).jpg";
-import img5 from "./assets/img (5).jpg";
-import img6 from "./assets/img (6).jpg";
-import img7 from "./assets/img (7).jpg";
-import img8 from "./assets/img (8).jpg";
-import img9 from "./assets/img (9).jpg";
-import img10 from "./assets/img (10).jpg";
-import img11 from "./assets/img (11).jpg";
-import img12 from "./assets/img (12).jpg";
-import img13 from "./assets/img (13).jpg";
-import img14 from "./assets/img (14).jpg";
-import img15 from "./assets/img (15).jpg";
-import img16 from "./assets/img (16).jpg";
-import img17 from "./assets/img (17).jpg";
+import img1 from "./assets/img (1).webp";
+import img2 from "./assets/img (2).webp";
+import img3 from "./assets/img (3).webp";
+import img4 from "./assets/img (4).webp";
+import img5 from "./assets/img (5).webp";
+import img6 from "./assets/img (6).webp";
+import img7 from "./assets/img (7).webp";
+import img8 from "./assets/img (8).webp";
+import img9 from "./assets/img (9).webp";
+import img10 from "./assets/img (10).webp";
+import img11 from "./assets/img (11).webp";
+import img12 from "./assets/img (12).webp";
+import img13 from "./assets/img (13).webp";
+import img14 from "./assets/img (14).webp";
+import img15 from "./assets/img (15).webp";
+import img16 from "./assets/img (16).webp";
+import img17 from "./assets/img (17).webp";
 
 const Loader = () => {
     const loaderRef = useRef<HTMLDivElement>(null)
@@ -93,9 +93,12 @@ const Loader = () => {
         const handleMouseMove = (e: MouseEvent) => {
             if (mouseDown) {
                 const imageField = loader?.querySelector<HTMLDivElement>(`.${styles.imageField}`)
-                if (imageField) {
-                    imageField.style.left = `${Math.min(0, e.pageX - shift.x)}px`
-                    imageField.style.top = `${Math.min(0, e.pageY - shift.y)}px`
+                if (loader && imageField) {
+                    // extra height and width are used to calculate the bounds for how much you can drag the image field
+                    const extraWidth = (imageField.offsetWidth - loader?.offsetWidth)
+                    const extraHeight = (imageField.offsetHeight - loader?.offsetHeight)
+                    imageField.style.left = `${Math.max(Math.min(0, e.pageX - shift.x), -extraWidth)}px`
+                    imageField.style.top = `${Math.max(Math.min(0, e.pageY - shift.y), -extraHeight)}px`
                 }
 
             }
@@ -106,9 +109,11 @@ const Loader = () => {
             const touch = e.touches[0]
             if (mouseDown) {
                 const imageField = loader?.querySelector<HTMLDivElement>(`.${styles.imageField}`)
-                if (imageField) {
-                    imageField.style.left = `${Math.min(0, touch.pageX - shift.x)}px`
-                    imageField.style.top = `${Math.min(0, touch.pageY - shift.y)}px`
+                if (loader && imageField) {
+                    const extraWidth = (imageField.offsetWidth - loader?.offsetWidth)
+                    const extraHeight = (imageField.offsetHeight - loader?.offsetHeight)
+                    imageField.style.left = `${Math.max(Math.min(0, touch.pageX - shift.x), -extraWidth)}px`
+                    imageField.style.top = `${Math.max(Math.min(0, touch.pageY - shift.y), -extraHeight)}px`
                 }
 
             }
@@ -151,23 +156,23 @@ const Loader = () => {
             </div>
             <div className={styles.imageField}>
                 <div className={styles.imageFieldInner} id="imageFieldInner">
-                    <img src={img1} alt="" className={`${styles.imageFieldImage} imageAnim1`} id={styles.image1} />
-                    <img src={img2} alt="" className={`${styles.imageFieldImage} imageAnim2`} id={styles.image2} />
-                    <img src={img3} alt="" className={`${styles.imageFieldImage} imageAnim3`} id={styles.image3} />
-                    <img src={img4} alt="" className={`${styles.imageFieldImage} imageAnim4`} id={styles.image4} />
-                    <img src={img5} alt="" className={`${styles.imageFieldImage} imageAnim5`} id={styles.image5} />
-                    <img src={img6} alt="" className={`${styles.imageFieldImage} imageAnim6`} id={styles.image6} />
-                    <img src={img7} alt="" className={`${styles.imageFieldImage} imageAnim7`} id={styles.image7} />
-                    <img src={img8} alt="" className={`${styles.imageFieldImage} imageAnim8`} id={styles.image8} />
-                    <img src={img9} alt="" className={`${styles.imageFieldImage} imageAnim9`} id={styles.image9} />
-                    <img src={img10} alt="" className={`${styles.imageFieldImage} imageAnim10`} id={styles.image10} />
-                    <img src={img11} alt="" className={`${styles.imageFieldImage} imageAnim11`} id={styles.image11} />
-                    <img src={img12} alt="" className={`${styles.imageFieldImage} imageAnim12`} id={styles.image12} />
-                    <img src={img13} alt="" className={`${styles.imageFieldImage} imageAnim13`} id={styles.image13} />
-                    <img src={img14} alt="" className={`${styles.imageFieldImage} imageAnim14`} id={styles.image14} />
-                    <img src={img15} alt="" className={`${styles.imageFieldImage} imageAnim15`} id={styles.image15} />
-                    <img src={img16} alt="" className={`${styles.imageFieldImage} imageAnim16`} id={styles.image16} />
-                    <img src={img17} alt="" className={`${styles.imageFieldImage} imageAnim17`} id={styles.image17} />
+                    <img src={img1} alt="" className={`${styles.imageFieldImage} imageAnim1`} id={styles.image1} draggable="false" />
+                    <img src={img2} alt="" className={`${styles.imageFieldImage} imageAnim2`} id={styles.image2} draggable="false" />
+                    <img src={img3} alt="" className={`${styles.imageFieldImage} imageAnim3`} id={styles.image3} draggable="false" />
+                    <img src={img4} alt="" className={`${styles.imageFieldImage} imageAnim4`} id={styles.image4} draggable="false" />
+                    <img src={img5} alt="" className={`${styles.imageFieldImage} imageAnim5`} id={styles.image5} draggable="false" />
+                    <img src={img6} alt="" className={`${styles.imageFieldImage} imageAnim6`} id={styles.image6} draggable="false" />
+                    <img src={img7} alt="" className={`${styles.imageFieldImage} imageAnim7`} id={styles.image7} draggable="false" />
+                    <img src={img8} alt="" className={`${styles.imageFieldImage} imageAnim8`} id={styles.image8} draggable="false" />
+                    <img src={img9} alt="" className={`${styles.imageFieldImage} imageAnim9`} id={styles.image9} draggable="false" />
+                    <img src={img10} alt="" className={`${styles.imageFieldImage} imageAnim10`} id={styles.image10} draggable="false" />
+                    <img src={img11} alt="" className={`${styles.imageFieldImage} imageAnim11`} id={styles.image11} draggable="false" />
+                    <img src={img12} alt="" className={`${styles.imageFieldImage} imageAnim12`} id={styles.image12} draggable="false" />
+                    <img src={img13} alt="" className={`${styles.imageFieldImage} imageAnim13`} id={styles.image13} draggable="false" />
+                    <img src={img14} alt="" className={`${styles.imageFieldImage} imageAnim14`} id={styles.image14} draggable="false" />
+                    <img src={img15} alt="" className={`${styles.imageFieldImage} imageAnim15`} id={styles.image15} draggable="false" />
+                    <img src={img16} alt="" className={`${styles.imageFieldImage} imageAnim16`} id={styles.image16} draggable="false" />
+                    <img src={img17} alt="" className={`${styles.imageFieldImage} imageAnim17`} id={styles.image17} draggable="false" />
                 </div>
             </div>
         </div>
