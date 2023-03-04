@@ -1,0 +1,52 @@
+.onViewContainer {
+  width: 95%;
+  max-width: 1800px;
+  background-color: black;
+  padding-left: 150px;
+  padding-bottom: 9em;
+
+  .banner {
+    display: flex;
+    width: 100%;
+    color: white;
+
+    .bannerImageContainer {
+      flex: 0.7;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+
+    .bannerText {
+      flex: 0.3;
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      font-size: 7em;
+      padding: 0 6rem 3rem 6rem;
+      line-height: 1em;
+
+      .exhibitionInfo {
+        font-size: 1rem;
+        div {
+          margin: 0 0.5em;
+          display: inline;
+        }
+
+        .tag {
+          background-color: white;
+          color: black;
+          padding: 0 0.5em;
+          border-radius: 1rem;
+        }
+      }
+
+      .title {
+        font-style: italic;
+      }
+    }
+  }
+}
