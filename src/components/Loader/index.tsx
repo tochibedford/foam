@@ -25,7 +25,14 @@ const Loader = () => {
     const [progress, setProgress] = useState(0);
     useEffect(() => {
         const loader = loaderRef?.current
-        const tl = gsap.timeline({ onUpdate: () => { setProgress(Math.round(tl.progress() * 100)) }, onComplete: () => { if (progressRef.current) progressRef.current.style.opacity = "0.001" } })
+        const tl = gsap.timeline({
+            onUpdate: () => { setProgress(Math.round(tl.progress() * 100)) }, onComplete: () => {
+                if (progressRef.current) {
+                    progressRef.current.style.opacity = "0.001"
+                }
+                scrollTo({ left: 0, top: window.innerHeight / 2, behavior: "smooth" })
+            }
+        })
         if (loader) {
             tl.to(loader?.querySelector("#foamSvg"), { duration: 1.5, width: "0.03em", delay: 0.4, ease: "expo.inOut" }) //foam svg reduce
                 .to(loader?.querySelector("#loaderTitle"), { duration: 1.5, scale: "2", ease: "expo.inOut" }, "-=1.5") //title text increase
@@ -145,7 +152,7 @@ const Loader = () => {
         //parallax
         const handleScroll = () => {
             const scrollDistance = window.scrollY
-            const damping = 0.5 //0.5 means ~ for every 1px of scrolling only move the controlled object 0.5px
+            const damping = 0.7 //0.5 means ~ for every 1px of scrolling only move the controlled object 0.5px
             const loader = loaderRef?.current
             if (loader)
                 loader.style.transform = `translateY(${scrollDistance * damping}px)`
